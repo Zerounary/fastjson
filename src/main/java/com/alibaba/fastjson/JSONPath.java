@@ -854,8 +854,11 @@ public class JSONPath implements JSONAware {
                 }
                 predicateFlag = true;
             }
-            //IOUtils.firstIdentifier(ch)
-            if (predicateFlag || true || ch == '\\' || ch == '@') {
+//            IOUtils.firstIdentifier(ch);
+            boolean isChinseSuport = IOUtils.firstIdentifier(ch);
+            if(ch > '\u4E00' && ch < '\u9FEF')
+                isChinseSuport = true;
+            if (predicateFlag || isChinseSuport || ch == '\\' || ch == '@') {
                 boolean self = false;
                 if (ch == '@') {
                     next();
@@ -1859,8 +1862,8 @@ public class JSONPath implements JSONAware {
 
         public Object eval(JSONPath path, Object rootObject, Object currentObject) {
             Object max = null;
-            if (rootObject instanceof Collection) {
-                Iterator iterator = ((Collection) rootObject).iterator();
+            if (currentObject instanceof Collection) {
+                Iterator iterator = ((Collection) currentObject).iterator();
                 while (iterator.hasNext()) {
                     Object next = iterator.next();
                     if (next == null) {
@@ -1890,8 +1893,8 @@ public class JSONPath implements JSONAware {
 
         public Object eval(JSONPath path, Object rootObject, Object currentObject) {
             Object min = null;
-            if (rootObject instanceof Collection) {
-                Iterator iterator = ((Collection) rootObject).iterator();
+            if (currentObject instanceof Collection) {
+                Iterator iterator = ((Collection) currentObject).iterator();
                 while (iterator.hasNext()) {
                     Object next = iterator.next();
                     if (next == null) {
