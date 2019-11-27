@@ -854,8 +854,8 @@ public class JSONPath implements JSONAware {
                 }
                 predicateFlag = true;
             }
-
-            if (predicateFlag || IOUtils.firstIdentifier(ch) || ch == '\\' || ch == '@') {
+            //IOUtils.firstIdentifier(ch)
+            if (predicateFlag || true || ch == '\\' || ch == '@') {
                 boolean self = false;
                 if (ch == '@') {
                     next();
